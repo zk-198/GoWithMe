@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -142,63 +142,6 @@
         subText.innerText = pleaseMessages[msgIndex];
         emojiDisplay.innerText = cryingEmojis[emojiIndex];
 
-        // Grow the Yes button on every 'No' click
-        const yesBtn = document.querySelector(".btn-yes");
-        let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
-        yesBtn.style.fontSize = (currentSize + 2) + "px";
-        yesBtn.style.padding = (12 + noClickCount * 2) + "px " + (24 + noClickCount * 4) + "px";
-
-        noClickCount++;
-    }
-
-    function showForm() {
-        document.getElementById("question-section").classList.add("hidden");
-        document.getElementById("form-section").classList.remove("hidden");
-    }
-
-    function submitSelection() {
-        const date = document.getElementById("trip-date").value;
-        const activity = document.getElementById("activity").value;
-
-        if (!date || !activity) {
-            alert("Please select both a date and an activity!");
-            return;
-        }
-<script>
-    const pleaseMessages = [
-        "Are you sure? Please? 🥺",
-        "Pretty please with a cherry on top? 🍒",
-        "Think again... It's going to be so fun! 😭",
-        "Don't be cold! Say yes! 💔",
-        "I'll bring all your favorite snacks! Please? 🍫",
-        "You're breaking my heart into tiny pieces... 🪦",
-        "Just one day! You deserve a break! 🌿",
-        "I'll handle all the planning and driving! 🚗",
-        "Are you really going to click No again? 👁️👁️",
-        "Look at this sad face! 😿",
-        "I will literally beg! Please please please! 🙏",
-        "Think of the memories! 📸",
-        "Wrong button! The green one is right next to it! 👉",
-        "My heart can't take this rejection... 💔",
-        "Fine, but what if I ask really nicely one more time? ✨",
-        "You have to say yes eventually! 😈"
-    ];
-    
-    const cryingEmojis = ["😭", "🥺", "😿", "💔", "😢", "😩", "🥀", "🥺‍💨"];
-    let noClickCount = 0;
-
-    function handleNo() {
-        const headline = document.getElementById("headline");
-        const emojiDisplay = document.getElementById("emoji-display");
-        const subText = document.getElementById("sub-text");
-
-        const msgIndex = noClickCount % pleaseMessages.length;
-        const emojiIndex = noClickCount % cryingEmojis.length;
-
-        headline.innerText = "Please?";
-        subText.innerText = pleaseMessages[msgIndex];
-        emojiDisplay.innerText = cryingEmojis[emojiIndex];
-
         const yesBtn = document.querySelector(".btn-yes");
         let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
         yesBtn.style.fontSize = (currentSize + 2) + "px";
@@ -221,21 +164,11 @@
             return;
         }
 
-        // --- YOUR PHONE NUMBER HERE (Country Code + Number, no + or spaces) ---
         const phoneNumber = "923234138284"; 
-        
         const message = `I said YES! ❤️\n\n📅 Date: ${date}\n🎈 Activity: ${activity}`;
         const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
 
-        // Open WhatsApp directly
         window.location.href = whatsappUrl;
-    }
-</script>
-
-        document.getElementById("form-section").classList.add("hidden");
-        document.getElementById("confirmation-section").classList.remove("hidden");
-        
-        document.getElementById("summary-text").innerText = `Booked for ${date}!\nActivity: ${activity}`;
     }
 </script>
 
