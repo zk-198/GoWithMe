@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Request</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fce4ec;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+        h1 { color: #d81b60; margin-bottom: 20px; }
+        .emoji { font-size: 60px; margin: 15px 0; }
+        .btn-group { margin-top: 20px; }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 5px;
+            transition: transform 0.2s;
+        }
+        button:hover { transform: scale(1.05); }
+        .btn-yes { background-color: #4caf50; color: white; }
+        .btn-no { background-color: #f44336; color: white; }
+        .hidden { display: none; }
+        form { text-align: left; margin-top: 20px; }
+        label { font-weight: bold; display: block; margin-top: 10px; color: #333; }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .submit-btn {
+            background-color: #d81b60;
+            color: white;
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <!-- Step 1: Initial Question -->
+    <div id="question-section">
+        <h1 id="headline">Will you go on a trip with me?</h1>
+        <div id="emoji-display" class="emoji">🥺</div>
+        <p id="sub-text">I planned something special!</p>
+        <div class="btn-group">
+            <button class="btn-yes" onclick="showForm()">Yes!</button>
+            <button class="btn-no" id="no-btn" onclick="handleNo()">No</button>
+        </div>
+    </div>
+
+    <!-- Step 2: Date & Activity Selection -->
+    <div id="form-section" class="hidden">
+        <h1>Awesome! Pick the details:</h1>
+        <div class="emoji">🎉🥳</div>
+        <form id="trip-form">
+            <label for="trip-date">Select Date:</label>
+            <input type="date" id="trip-date" required>
+
+            <label for="activity">Select Primary Activity:</label>
+            <select id="activity" required>
+                <option value="" disabled selected>Choose an activity...</option>
+                <option value="Long Drive & Music">Long Drive & Music</option>
+                <option value="1-2 Day Scenic Getaway">1-2 Day Scenic Getaway</option>
+                <option value="Fine Dining & Dinner Date">Fine Dining & Dinner Date</option>
+                <option value="Cafe Hopping & Coffee Run">Cafe Hopping & Coffee Run</option>
+                <option value="Outdoor Nature Walk / Hiking">Outdoor Nature Walk / Hiking</option>
+                <option value="Relaxing Spa & Resort Stay">Relaxing Spa & Resort Stay</option>
+                <option value="Historical & Sightseeing Tour">Historical & Sightseeing Tour</option>
+                <option value="Street Food Crawl">Street Food Crawl</option>
+                <option value="Stargazing & Late Night Picnic">Stargazing & Late Night Picnic</option>
+                <option value="Surprise Mystery Trip">Surprise Mystery Trip (I pick everything)</option>
+            </select>
+
+            <button type="button" class="submit-btn" onclick="submitSelection()">Lock It In!</button>
+        </form>
+    </div>
+
+    <!-- Step 3: Final Confirmation -->
+    <div id="confirmation-section" class="hidden">
+        <h1>It's a Date! ❤️</h1>
+        <div class="emoji">✈️📍</div>
+        <p id="summary-text"></p>
+    </div>
+</div>
+
+<script>
+    const pleaseMessages = [
+        "Are you sure? Please? 🥺",
+        "Pretty please with a cherry on top? 🍒",
+        "Think again... It's going to be so fun! 😭",
+        "Don't be cold! Say yes! 💔",
+        "I'll bring all your favorite snacks! Please? 🍫",
+        "You're breaking my heart into tiny pieces... 🪦",
+        "Just one day! You deserve a break! 🌿",
+        "I'll handle all the planning and driving! 🚗",
+        "Are you really going to click No again? 👁️👁️",
+        "Look at this sad face! 😿",
+        "I will literally beg! Please please please! 🙏",
+        "Think of the memories! 📸",
+        "Wrong button! The green one is right next to it! 👉",
+        "My heart can't take this rejection... 💔",
+        "Fine, but what if I ask really nicely one more time? ✨",
+        "You have to say yes eventually! 😈"
+    ];
+    
+    const cryingEmojis = ["😭", "🥺", "😿", "💔", "😢", "😩", "🥀", "🥺‍💨"];
+    let noClickCount = 0;
+
+    function handleNo() {
+        const headline = document.getElementById("headline");
+        const emojiDisplay = document.getElementById("emoji-display");
+        const subText = document.getElementById("sub-text");
+
+        const msgIndex = noClickCount % pleaseMessages.length;
+        const emojiIndex = noClickCount % cryingEmojis.length;
+
+        headline.innerText = "Please?";
+        subText.innerText = pleaseMessages[msgIndex];
+        emojiDisplay.innerText = cryingEmojis[emojiIndex];
+
+        // Grow the Yes button on every 'No' click
+        const yesBtn = document.querySelector(".btn-yes");
+        let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+        yesBtn.style.fontSize = (currentSize + 2) + "px";
+        yesBtn.style.padding = (12 + noClickCount * 2) + "px " + (24 + noClickCount * 4) + "px";
+
+        noClickCount++;
+    }
+
+    function showForm() {
+        document.getElementById("question-section").classList.add("hidden");
+        document.getElementById("form-section").classList.remove("hidden");
+    }
+
+    function submitSelection() {
+        const date = document.getElementById("trip-date").value;
+        const activity = document.getElementById("activity").value;
+
+        if (!date || !activity) {
+            alert("Please select both a date and an activity!");
+            return;
+        }
+
+        document.getElementById("form-section").classList.add("hidden");
+        document.getElementById("confirmation-section").classList.remove("hidden");
+        
+        document.getElementById("summary-text").innerText = `Booked for ${date}!\nActivity: ${activity}`;
+    }
+</script>
+
+</body>
+</html>
